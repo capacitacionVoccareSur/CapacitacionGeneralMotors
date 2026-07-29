@@ -33,7 +33,7 @@
   --maxw:1180px;
 }
 *{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:170px}
+html{scroll-behavior:smooth;scroll-padding-top:var(--sticky-h,120px)}
 body{
   margin:0;background:var(--paper);color:var(--text);
   font-family:"IBM Plex Sans",system-ui,sans-serif;
@@ -106,7 +106,7 @@ h1,h2,h3,h4{font-family:"Bricolage Grotesque","IBM Plex Sans",sans-serif;margin:
 .btn-reset:hover{border-color:var(--mag);color:var(--mag)}
 
 /* ── NAV ──────────────────────────────── */
-.tocbar{background:var(--ink);position:sticky;top:59px;z-index:55;overflow-x:auto;scrollbar-width:thin}
+.tocbar{background:var(--ink);position:sticky;top:var(--controls-h,59px);z-index:55;overflow-x:auto;scrollbar-width:thin}
 .tocbar nav{display:flex;gap:2px;padding:0;min-width:max-content}
 .tocbar a{color:#9AA1C6;text-decoration:none;font-family:"IBM Plex Mono",monospace;font-size:11px;
   letter-spacing:.1em;text-transform:uppercase;padding:12px 15px;white-space:nowrap;border-bottom:2px solid transparent}
@@ -115,7 +115,7 @@ h1,h2,h3,h4{font-family:"Bricolage Grotesque","IBM Plex Sans",sans-serif;margin:
 
 /* ── SECCIONES ────────────────────────── */
 main{padding:44px 0 0}
-section{margin-bottom:60px;scroll-margin-top:170px}
+section{margin-bottom:60px;scroll-margin-top:var(--sticky-h,120px)}
 .sec-head{display:flex;align-items:baseline;gap:16px;padding-bottom:14px;margin-bottom:26px;
   border-bottom:1px solid #DCE0E9}
 .sec-num{font-family:"IBM Plex Mono",monospace;font-size:12px;color:var(--mag);font-weight:600;letter-spacing:.1em}
@@ -1090,6 +1090,17 @@ footer a{color:#4FD8F0}
 
 <script>
 (function(){
+  // Mide las barras sticky y actualiza las variables CSS que las referencian
+  var root = document.documentElement;
+  function updateStickyVars(){
+    var ch = document.querySelector('.controls').offsetHeight;
+    var th = document.querySelector('.tocbar').offsetHeight;
+    root.style.setProperty('--controls-h', ch + 'px');
+    root.style.setProperty('--sticky-h', (ch + th) + 'px');
+  }
+  updateStickyVars();
+  window.addEventListener('resize', updateStickyVars, {passive:true});
+
   var q = document.getElementById('q');
   var fpais = document.getElementById('fpais');
   var fprog = document.getElementById('fprog');
@@ -1233,6 +1244,8 @@ footer a{color:#4FD8F0}
   var links = Array.prototype.slice.call(document.querySelectorAll('#toc a'));
   var secs = links.map(function(a){ return document.querySelector(a.getAttribute('href')); }).filter(Boolean);
   if('IntersectionObserver' in window){
+    var stickyH = document.querySelector('.controls').offsetHeight +
+                  document.querySelector('.tocbar').offsetHeight;
     var obs = new IntersectionObserver(function(entries){
       entries.forEach(function(e){
         if(!e.isIntersecting) return;
@@ -1242,7 +1255,7 @@ footer a{color:#4FD8F0}
         var act = document.querySelector('#toc a.active');
         if(act && act.scrollIntoView) act.scrollIntoView({block:'nearest', inline:'nearest'});
       });
-    }, {rootMargin:'-175px 0px -68% 0px'});
+    }, {rootMargin:'-' + (stickyH + 5) + 'px 0px -68% 0px'});
     secs.forEach(function(s){ obs.observe(s); });
   }
 
