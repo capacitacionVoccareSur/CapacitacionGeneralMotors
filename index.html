@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Asistencia Vial General Motors · Manual de capacitación · Voccare</title>
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23101120'/%3E%3Ctext x='16' y='22' text-anchor='middle' font-family='system-ui,sans-serif' font-size='16' font-weight='800' fill='%23E0245E'%3EGM%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%23101120'/%3E%3Ctext x='16' y='21' text-anchor='middle' font-family='system-ui,sans-serif' font-size='12' font-weight='800' fill='%23E0245E'%3ECGM%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -1254,7 +1254,7 @@ footer a{color:#4FD8F0}
           a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id);
         });
         var act = document.querySelector('#toc a.active');
-        if(act && act.scrollIntoView) act.scrollIntoView({block:'nearest', inline:'nearest'});
+        if(act && act.scrollIntoView) act.scrollIntoView({block:'nearest', inline:'nearest', behavior:'instant'});
       });
     }, {rootMargin:'-' + (stickyH + 5) + 'px 0px -68% 0px'});
     secs.forEach(function(s){ obs.observe(s); });
